@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Heladería</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h5 class="text-white">Sistema de Gestión</h5>
+                        <p class="text-white-50" id="negocio-nombre">Mi Heladería</p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="dashboard-link">
+                                <i class="bi bi-speedometer2 me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="productos-link">
+                                <i class="bi bi-cup-straw me-2"></i>
+                                Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="inventario-link">
+                                <i class="bi bi-box-seam me-2"></i>
+                                Inventario
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="ventas-link">
+                                <i class="bi bi-cart-check me-2"></i>
+                                Ventas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="reportes-link">
+                                <i class="bi bi-graph-up me-2"></i>
+                                Reportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="configuracion-link">
+                                <i class="bi bi-gear me-2"></i>
+                                Configuración
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="text-white-50">
+                    <div class="dropdown px-3">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <span id="usuario-nombre">Usuario</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#" id="perfil-link">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logout-link">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" id="page-title">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
+                            <i class="bi bi-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Login Form (initially hidden) -->
+                <div id="login-container" class="container mt-5 d-none">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h4 class="mb-0">Iniciar Sesión</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form id="login-form">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Correo electrónico</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Contraseña</label>
+                                            <input type="password" class="form-control" id="password" required>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content containers for different sections -->
+                <div id="dashboard-container">
+                    <!-- Dashboard content -->
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-left-primary h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Ventas (Hoy)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ventas-hoy">$0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="bi bi-currency-dollar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-left-success h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Productos</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-productos">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="bi bi-cup-straw fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-left-warning h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Alertas de Stock</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="alertas-stock">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="bi bi-exclamation-triangle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-bar-chart-fill me-1"></i>
+                                    Productos más vendidos
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="productosChart" width="100%" height="50"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-graph-up me-1"></i>
+                                    Ventas por día
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="ventasChart" width="100%" height="50"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="productos-container" class="d-none">
+                    <!-- Productos content -->
+                    <div class="d-flex justify-content-between mb-4">
+                        <div>
+                            <button class="btn btn-primary" id="nuevo-producto-btn">
+                                <i class="bi bi-plus-circle me-2"></i>Nuevo Producto
+                            </button>
+                        </div>
+                        <div class="d-flex">
+                            <select class="form-select me-2" id="filtro-categoria">
+                                <option value="">Todas las categorías</option>
+                            </select>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Buscar..." id="buscar-producto">
+                                <button class="btn btn-outline-secondary" type="button" id="buscar-btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos-table-body">
+                                <!-- Productos se cargarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="inventario-container" class="d-none">
+                    <!-- Inventario content -->
+                    <ul class="nav nav-tabs mb-4">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab-stock" href="#">Stock</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-movimientos" href="#">Movimientos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-materias-primas" href="#">Materias Primas</a>
+                        </li>
+                    </ul>
+
+                    <div id="stock-container">
+                        <div class="d-flex justify-content-between mb-4">
+                            <div>
+                                <button class="btn btn-primary" id="nuevo-movimiento-btn">
+                                    <i class="bi bi-plus-circle me-2"></i>Nuevo Movimiento
+                                </button>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mostrar-bajo-minimo">
+                                <label class="form-check-label" for="mostrar-bajo-minimo">Mostrar solo bajo mínimo</label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Stock Actual</th>
+                                        <th>Stock Mínimo</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-table-body">
+                                    <!-- Stock se cargará dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="movimientos-container" class="d-none">
+                        <div class="d-flex justify-content-between mb-4">
+                            <div>
+                                <button class="btn btn-primary" id="nuevo-movimiento-btn-2">
+                                    <i class="bi bi-plus-circle me-2"></i>Nuevo Movimiento
+                                </button>
+                            </div>
+                            <div class="d-flex">
+                                <select class="form-select me-2" id="filtro-tipo-movimiento">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="entrada">Entradas</option>
+                                    <option value="salida">Salidas</option>
+                                    <option value="ajuste">Ajustes</op
+(Content truncated due to size limit. Use line ranges to read in chunks)
